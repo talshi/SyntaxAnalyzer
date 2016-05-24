@@ -2,12 +2,16 @@ import java.util.List;
 
 public class AST {
 
+	private boolean DEBUG = true;
 	final private Node root;
 	private Node current;
 	
 	public AST() {
 		root = new Node("E"); // TODO init root
 		current = root;
+		
+		if(DEBUG)
+			System.out.println("[SA]AST initalized successfuly");
 	}
 	
 	public void setChildList(List<Node> l) {

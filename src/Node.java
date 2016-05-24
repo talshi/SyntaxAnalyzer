@@ -1,28 +1,20 @@
 import java.util.LinkedList;
 import java.util.List;
 
-public class Node {
+public abstract class Node {
 
-	private static int nodeNumber = 0;
+	private static int nodeID = 0;
 	private int id;
 	final private Node parent;
 	private String data;
-	private nodeTypeEnum type;
 	final private List<Node> children;
 	
-	public static enum nodeTypeEnum {
-		Token,
-		String,
-		EOF,
-		eps
-	}
-	
-	public Node(String data) {
-		this.parent = null;
-		this.children = new LinkedList<Node>();
-		this.data = data;
-		this.id = nodeNumber++;
-	}
+//	public Node(String data) {
+//		this.parent = null;
+//		this.children = new LinkedList<Node>();
+//		this.data = data;
+//		this.id = nodeID++;
+//	}
 	
 	public void setData(String data) {
 		this.data = data;
@@ -30,10 +22,6 @@ public class Node {
 	
 	public String getData() {
 		return data;
-	}
-	
-	public nodeTypeEnum getNodeType() {
-		return type;
 	}
 	
 	public void setChild(Node n) {
@@ -47,12 +35,12 @@ public class Node {
 		}
 	}
 	
-	public void setChildren(List<Node> l) {
-		children.addAll(l);
-	}
-	
 	public List<Node> getChildren() {
 		return children;
+	}
+	
+	public boolean setChildren(List<Node> children) {
+		return this.children.addAll(children);
 	}
 	
 	public Node getParent() {

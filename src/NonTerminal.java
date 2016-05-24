@@ -1,8 +1,13 @@
+import Node.nodeTypeEnum;
 
 public class NonTerminal extends Node {
-
+	
 	public NonTerminal(String data) {
 		super(data);
+	}
+	
+	public nodeTypeEnum getNodeType() {
+		return nodeTypeEnum.String;
 	}
 
 	@Override

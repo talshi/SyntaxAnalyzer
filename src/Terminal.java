@@ -1,10 +1,14 @@
 
 public class Terminal extends Node {
 
-	Token t = null;
+	private Token t = null;
 	
 	public Terminal(String data) {
 		super(data);
+	}
+	
+	public nodeTypeEnum getNodeType() {
+		return nodeTypeEnum.Token;
 	}
 	
 	@Override

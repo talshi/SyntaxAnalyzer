@@ -10,12 +10,20 @@ import java.util.Map;
 
 public class Grammar {
 
+	boolean DEBUG = true;
+	
 	private Map<String, List<Node>> prodList;
 
 	public Grammar(String configFile) {
 		// create map of production rules
 		prodList = new HashMap<String, List<Node>>();
-		parseConfigFile(configFile);
+		boolean parsePassed = parseConfigFile(configFile);
+		if(!parsePassed) {
+			System.err.println("Config file parsed failed.");
+		}
+		
+		if(DEBUG)
+			System.out.println("[SA]Grammar initialize successfully.");
 	}
 
 	public List<Node> getProductionRules(Node sthead, Token input) {
@@ -26,7 +34,7 @@ public class Grammar {
 		return prodList.get(s);
 	}
 
-	private void parseConfigFile(String configFile) {
+	private boolean parseConfigFile(String configFile) {
 		FileReader fr = null;
 		BufferedReader br = null;
 		LineNumberReader lnr = null;
@@ -48,55 +56,79 @@ public class Grammar {
 			String tmpLine = String.valueOf(line);
 			terminals = tmpLine.split(",|="); // TODO delete "terminals="
 			
-			// DEBUG
-			printStrings(terminals);
+			if(DEBUG)
+				System.out.println("Line token #" + lineNumber + ": " + tmpLine);
+
+			if(DEBUG)
+				printStrings(terminals);
 
 			lineNumber++;
 
 			while( (line = lnr.readLine()) != null) {
 				tmpLine = String.valueOf(line);
-				System.out.println("Line token #" + lineNumber + ": " + tmpLine);
-				if(tmpLine.contains("#")) {
+				
+				if(DEBUG)
+					System.out.println("Line token #" + lineNumber + ": " + tmpLine);
+
+				nonTerminalLine = parseNonTerminals(tmpLine);
+				if(nonTerminalLine == null) { // skip on notes
 					lineNumber++;
 					continue;
 				}
+				if(DEBUG)
+					System.out.println(nonTerminalLine);
 
-				nonTerminalLine = parseNonTerminals(tmpLine);
-				
-				// DEBUG
-				printStrings(nonTerminalLine);
 				currNonTerminal = nonTerminalLine.get(0);
 
-				for(int i = 0; i < nonTerminalLine.size(); i++) {
+				for(int i = 1; i < nonTerminalLine.size(); i++) {
 					String[] tmpProd = nonTerminalLine.get(i).split(";");
-					printStrings(tmpProd);
+					
+//					if(DEBUG)
+//						printStrings(tmpProd);
 					
 					// create list of production rules (nodes)
 					List<Node> prod = new ArrayList<Node>();
-					for(int j = 1; j < tmpProd.length; j++) {
-						prod.add(new Node(tmpProd[j]));
+					for(int j = 0; j < tmpProd.length; j++) {
+						if(!tmpProd[j].equals(" ")) {
+							prod.add(new Node(tmpProd[j]));
+						}
 					}
-					System.out.println("List of productions: " + prod.toString());
+					if(prod.isEmpty()) { // if there is no rule, do nothing
+						continue;
+					}
+					
+					if(DEBUG)
+						System.out.println("List of productions: " + prod.toString());
+					
 					// add production rule to map, suits to its key
 					String key = "";
-					key += tmpProd[0] + " " + tmpProd[1];
+					key += nonTerminalLine.get(0) + " " + terminals[i];
 					prodList.put(key, prod);
-					System.out.println("Key: " + key + " Productions: " + prod.toString());
+					
+					if(DEBUG)
+						System.out.println("Key: " + key + ", Productions: " + prod.toString());
 				}
 				lineNumber++;
 			}
+			lnr.close();
 
 		} catch (FileNotFoundException e) {
 			System.err.println("ERROR: parse config file failed. File not found.");
+			return false;
 		} catch (IOException e) {
 			System.err.println("ERROR: parse config file failed. Throw IO Execption.");
+			return false;
 		}
+		return true;
 	}
 	
 	private List<String> parseNonTerminals(String line) {
 		List<String> nonTerminals = new ArrayList<String>();
 		char[] chars = line.toCharArray();
 		String str = "";
+		if(line.contains("#")) {
+			return null;
+		}
 		for(int i = 0; i < chars.length; i++) {
 			if(chars[i] == '=' || chars[i] == ',') {
 				if(str.isEmpty()) {
@@ -108,7 +140,6 @@ public class Grammar {
 			else {
 				str += chars[i];
 			}
-			System.out.println(str);
 		}
 		return nonTerminals;
 	}

@@ -10,7 +10,7 @@ public class Main {
 		}
 		
 		Parser p = new Parser();
-		SyntaxParser sp = new SyntaxParser(args[0]);
+		SyntaxParser sp = new SyntaxParser(args);
 		
 //		if( sp.yyLL1Parse() == null ) {
 //			System.err.println("Input is wrong according to LL(1) table.");
