@@ -4,11 +4,11 @@ public class Terminal extends Node {
 	private Token t = null;
 	
 	public Terminal(String data) {
-		super(data);
+		t.setLexema(data);
 	}
 	
-	public nodeTypeEnum getNodeType() {
-		return nodeTypeEnum.Token;
+	public NodeType getNodeType() {
+		return NodeType.Token;
 	}
 	
 	@Override

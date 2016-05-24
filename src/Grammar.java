@@ -90,7 +90,7 @@ public class Grammar {
 					List<Node> prod = new ArrayList<Node>();
 					for(int j = 0; j < tmpProd.length; j++) {
 						if(!tmpProd[j].equals(" ")) {
-							prod.add(new Node(tmpProd[j]));
+							prod.add(new Terminal(tmpProd[j]));
 						}
 					}
 					if(prod.isEmpty()) { // if there is no rule, do nothing

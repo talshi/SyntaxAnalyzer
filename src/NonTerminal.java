@@ -1,25 +1,23 @@
-import Node.nodeTypeEnum;
 
 public class NonTerminal extends Node {
 	
+	private String data;
+	
 	public NonTerminal(String data) {
-		super(data);
+		this.data = data;
 	}
 	
-	public nodeTypeEnum getNodeType() {
-		return nodeTypeEnum.String;
+	public NodeType getNodeType() {
+		return NodeType.String;
 	}
 
-	@Override
 	public void setData(String data) {
-		// TODO Auto-generated method stub
+		this.data = data;
 		
 	}
 
-	@Override
 	public String getData() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.data;
 	}
 	
 }

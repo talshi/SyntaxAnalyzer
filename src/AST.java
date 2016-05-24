@@ -7,7 +7,7 @@ public class AST {
 	private Node current;
 	
 	public AST() {
-		root = new Node("E"); // TODO init root
+		root = new NonTerminal("E");
 		current = root;
 		
 		if(DEBUG)

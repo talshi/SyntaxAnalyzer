@@ -5,9 +5,9 @@ public abstract class Node {
 
 	private static int nodeID = 0;
 	private int id;
-	final private Node parent;
+	final private Node parent = null;
 	private String data;
-	final private List<Node> children;
+	final private List<Node> children = null;
 	
 //	public Node(String data) {
 //		this.parent = null;

@@ -42,7 +42,7 @@ public class SyntaxParser {
 	// return AST or null in case the input is not suit the grammar
 	public AST yyLL1Parse() {
 		
-		// TODO step 0: pop, (check terminal or nonterminal), getProductionRules, setChilds, push
+		// TODO step 0: pop, (check terminal or nonterminal or EOF or eps), getProductionRules, setChilds, push
 		// note 1: non-terminal: current.isChild(T)->if true, setCurrent(T), else while(!current.getParrent.isChild(X)) { setCurrent(current.getParent() }, then setCurrent(X)
 		// note 2: terminal: compare with stackhead.nodeType == terminal and if compare(stackhead, input(token)), if both true then yylex()
 		// note 3: check from step 1 after pop if(current.isChild)
@@ -62,7 +62,7 @@ public class SyntaxParser {
 				break;
 			
 			// epsilon
-			else if()
+			else if(sthead.getNodeType())
 			
 			else if(sthead.getNodeType() ==  Node.nodeTypeEnum.String) { // Non-Terminal
 				while(!ast.getCurrent().isChild(sthead)) {
