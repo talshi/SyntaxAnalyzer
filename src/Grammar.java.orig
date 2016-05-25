@@ -90,8 +90,11 @@ public class Grammar {
 					List<Node> prod = new ArrayList<Node>();
 					for(int j = 0; j < tmpProd.length; j++) {
 						if(!tmpProd[j].equals(" ")) {
+<<<<<<< HEAD
 							prod.add(new Terminal(tmpProd[j])); // TODO check
+=======
 							prod.add(new NonTerminal(tmpProd[j], , lineNumber)); //??
+>>>>>>> 839f4ef280f9e77ae5db48a9d844ca9c136b6752
 						}
 					}
 					if(prod.isEmpty()) { // if there is no rule, do nothing
@@ -156,4 +159,5 @@ public class Grammar {
 			System.out.println(str);
 		}
 	}
+
 }

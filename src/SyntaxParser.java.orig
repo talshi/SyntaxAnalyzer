@@ -80,14 +80,17 @@ public class SyntaxParser {
 				break;
 
 			// epsilon
+<<<<<<< HEAD
 			else if(sthead.ge
 			
 			else if(sthead.getNodeType() ==  Node.nodeTypeEnum.String) { // Non-Terminal
+=======
 //			else if(sthead.getNodeType()){
 
 //			}
 			// Non-Terminal
 			else if(sthead.getNodeType() ==  NodeType.String) { 
+>>>>>>> 839f4ef280f9e77ae5db48a9d844ca9c136b6752
 				while(!ast.getCurrent().isChild(sthead)) {
 					ast.setCurrent(ast.getCurrent().getParent());
 				}
