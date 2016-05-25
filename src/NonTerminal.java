@@ -13,7 +13,6 @@ public class NonTerminal extends Node {
 
 	public void setData(String data) {
 		this.data = data;
-		
 	}
 
 	public String getData() {

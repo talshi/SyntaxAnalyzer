@@ -8,13 +8,17 @@ public class Main {
 			System.err.println("Error: argument list is null.");
 			System.exit(0);
 		}
-		
-		Parser p = new Parser();
+		else if (args.length != 2){
+			System.err.println("Error: argument list should contain 2 arguments.");
+			System.exit(0);
+		}
+
+		//Parser p = new Parser();
 		SyntaxParser sp = new SyntaxParser(args);
-		
-//		if( sp.yyLL1Parse() == null ) {
-//			System.err.println("Input is wrong according to LL(1) table.");
-//		}
+
+		//		if( sp.yyLL1Parse() == null ) {
+		//			System.err.println("Input is wrong according to LL(1) table.");
+		//		}
 	}
 
 }

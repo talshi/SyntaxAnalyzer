@@ -3,7 +3,9 @@ public class Terminal extends Node {
 
 	private Token t = null;
 	
-	public Terminal(String data) {
+	
+	public Terminal(String data, Token.TokenType type, int lineNumber) {
+		t = new Token(data, type, lineNumber);
 		t.setLexema(data);
 	}
 	
@@ -11,16 +13,12 @@ public class Terminal extends Node {
 		return NodeType.Token;
 	}
 	
-	@Override
 	public void setData(String data) {
-		// TODO Auto-generated method stub
-		
+		this.t.setLexema(data);
 	}
 
-	@Override
 	public String getData() {
-		// TODO Auto-generated method stub
-		return null;
+		return t.getLexema();
 	}
 	
 }

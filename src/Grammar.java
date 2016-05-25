@@ -11,7 +11,7 @@ import java.util.Map;
 public class Grammar {
 
 	boolean DEBUG = true;
-	
+
 	private Map<String, List<Node>> prodList;
 
 	public Grammar(String configFile) {
@@ -21,7 +21,7 @@ public class Grammar {
 		if(!parsePassed) {
 			System.err.println("Config file parsed failed.");
 		}
-		
+
 		if(DEBUG)
 			System.out.println("[SA]Grammar initialize successfully.");
 	}
@@ -41,7 +41,7 @@ public class Grammar {
 		String line = "";
 		int lineNumber = 0;
 		String[] terminals = null;
-//		ArrayList<String[]> nonTerminals = new ArrayList<String[]>();
+		//ArrayList<String[]> nonTerminals = new ArrayList<String[]>();
 		List<String> nonTerminalLine = new ArrayList<String>();
 		String currNonTerminal = "";
 
@@ -51,11 +51,11 @@ public class Grammar {
 			lnr = new LineNumberReader(br);
 
 			line = lnr.readLine();
-			
+
 			// parse terminals line
 			String tmpLine = String.valueOf(line);
-			terminals = tmpLine.split(",|="); // TODO delete "terminals="
-			
+			terminals = tmpLine.split(",|="); // TODO delete "terminals=" // run from index 1
+
 			if(DEBUG)
 				System.out.println("Line token #" + lineNumber + ": " + tmpLine);
 
@@ -66,7 +66,7 @@ public class Grammar {
 
 			while( (line = lnr.readLine()) != null) {
 				tmpLine = String.valueOf(line);
-				
+
 				if(DEBUG)
 					System.out.println("Line token #" + lineNumber + ": " + tmpLine);
 
@@ -82,29 +82,29 @@ public class Grammar {
 
 				for(int i = 1; i < nonTerminalLine.size(); i++) {
 					String[] tmpProd = nonTerminalLine.get(i).split(";");
-					
-//					if(DEBUG)
-//						printStrings(tmpProd);
-					
+
+					//if(DEBUG)
+					//printStrings(tmpProd);
+
 					// create list of production rules (nodes)
 					List<Node> prod = new ArrayList<Node>();
 					for(int j = 0; j < tmpProd.length; j++) {
 						if(!tmpProd[j].equals(" ")) {
-							prod.add(new Terminal(tmpProd[j]));
+							prod.add(new NonTerminal(tmpProd[j], , lineNumber)); //??
 						}
 					}
 					if(prod.isEmpty()) { // if there is no rule, do nothing
 						continue;
 					}
-					
+
 					if(DEBUG)
 						System.out.println("List of productions: " + prod.toString());
-					
+
 					// add production rule to map, suits to its key
 					String key = "";
 					key += nonTerminalLine.get(0) + " " + terminals[i];
 					prodList.put(key, prod);
-					
+
 					if(DEBUG)
 						System.out.println("Key: " + key + ", Productions: " + prod.toString());
 				}
@@ -121,7 +121,7 @@ public class Grammar {
 		}
 		return true;
 	}
-	
+
 	private List<String> parseNonTerminals(String line) {
 		List<String> nonTerminals = new ArrayList<String>();
 		char[] chars = line.toCharArray();
@@ -149,7 +149,7 @@ public class Grammar {
 			System.out.println(str);
 		}
 	}
-	
+
 	private void printStrings(List<String> strings) {
 		for(String str : strings) {
 			System.out.println(str);

@@ -66,6 +66,8 @@ public abstract class Node {
 	public boolean addChild(Node n) {
 		return this.children.add(n); // return true if add child was succeed
 	}
+	
+	public abstract NodeType getNodeType();
     
     public String toString() {
     	String str = "";
@@ -83,4 +85,6 @@ public abstract class Node {
 
         return str;
     }
+    
+    
 }
