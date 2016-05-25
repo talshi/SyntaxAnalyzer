@@ -9,13 +9,6 @@ public abstract class Node {
 	private String data;
 	final private List<Node> children = null;
 	
-//	public Node(String data) {
-//		this.parent = null;
-//		this.children = new LinkedList<Node>();
-//		this.data = data;
-//		this.id = nodeID++;
-//	}
-	
 	public void setData(String data) {
 		this.data = data;
 	}

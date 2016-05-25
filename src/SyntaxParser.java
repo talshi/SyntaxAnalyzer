@@ -62,7 +62,7 @@ public class SyntaxParser {
 				break;
 			
 			// epsilon
-			else if(sthead.getNodeType())
+			else if(sthead.ge
 			
 			else if(sthead.getNodeType() ==  Node.nodeTypeEnum.String) { // Non-Terminal
 				while(!ast.getCurrent().isChild(sthead)) {
