@@ -1,0 +1,10 @@
+{
+	id1=id1+e+abcd;
+	if(a)
+		if(b)
+			c=a+b-c-d-ddd;
+	id1=id1+e+abcd;
+	if(a)
+		if(b)
+			c=a+b-c-d-ddd;
+}
