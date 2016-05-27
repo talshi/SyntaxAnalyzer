@@ -37,7 +37,7 @@ public class ParserMain
 		AST ast;
 		
 		if ((ast = p.yyLL1Parse()) != null){
-			System.out.println(p.printAST());
+			p.printAST(args[1]);
 			//p.printAST();
 		}
 		else{

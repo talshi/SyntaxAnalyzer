@@ -1,5 +1,9 @@
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -134,14 +138,36 @@ public class Parser {
 				st.push(ast.getCurrent().getChildren().get(i));
 			}
 		}
+		
+		// print to ast file
 	}
 
-	public String printAST()
+	public void printAST(String fileName)
 	{
 		String str = "";
 		ast.getRoot().setID();
 
-		return printAST(str, ast.getRoot());
+		str = printAST(str, ast.getRoot());
+
+		File file = new File(fileName.substring(0, fileName.lastIndexOf(".")) + ".ptree");
+		Writer writer = null;
+		try {
+			boolean bool = file.createNewFile();
+			if(!bool) {
+				System.err.println("ERROR creating output file!");
+			}
+			writer = new FileWriter(file);
+			
+			System.out.println("digraph G{ \n" + str + "}");
+			writer.write("digraph G{ \n" + str + "\n }");
+			
+			writer.close();
+			
+		} catch (IOException e) {
+			System.err.println("ERROR. Got an exception!");
+		}
+		
+		
 	}
 
 	private String printAST(String str, Node root)

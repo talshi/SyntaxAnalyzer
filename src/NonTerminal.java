@@ -17,7 +17,7 @@ public class NonTerminal extends Node {
 		this.children = new ArrayList<Node>();
 	}
 	
-	public Node clone(){
+	public Node clone(){ 
 		return new NonTerminal(this.data, this.parent);
 	}
 	
