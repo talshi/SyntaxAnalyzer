@@ -47,17 +47,6 @@ public abstract class Node {
 		return true;
 	}
 
-	// remove abstract ??
-	private boolean addChild(Node n){
-		// add Terminal
-		if (n.getNodeType() == NodeType.EOF || n.getNodeType() == NodeType.Token){
-			return this.children.add(new Terminal(n));
-		}
-		else{
-			return this.children.add(new NonTerminal(n));
-		}
-	}
-
 	public Node getParent() {
 		return this.parent;
 	}
@@ -82,8 +71,8 @@ public abstract class Node {
 		return this.id;
 	}
 
-	public void setID(){
-		this.id = nodeID++;
+	public void setID(int id){
+		this.id = id;
 	}
 
 	public String toString() {

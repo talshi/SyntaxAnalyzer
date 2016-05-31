@@ -14,6 +14,7 @@ import java.util.Stack;
 public class Parser {
 
 	private boolean DEBUG = false;
+	private static String filename = null;
 	private Map<Node, TokenInfo> map = null;
 	private Scanner s = null;
 	private Grammar gr = null;
@@ -27,6 +28,7 @@ public class Parser {
 		String inputFile = args[1];
 
 		// Init
+		filename = inputFile;
 		map = new HashMap<Node, TokenInfo>();
 		s = new Scanner(inputFile);
 		System.out.println("config-file = " + configFile);
@@ -54,19 +56,18 @@ public class Parser {
 		Node sthead = null;
 
 		// push EOF
-		//		st.push(new Terminal("EOF", null)); // ??
+		st.push(new Terminal("EOF", null)); // ??
 
 		// push init terminal
 		st.push(ast.getRoot());
 
 		while(true) {
-//			System.out.println("Stack: " + st.toString()); //--
 			sthead = st.pop();
-			//System.out.println("Stack after pop: " + st.toString()); //--
 
 			// EOF
 			if(sthead.getData().equals("EOF")) {
-				if(token.getTokenType().toString() == "EOF") {
+				if(token.getTokenType().toString().equals("EOF")) {
+					printAST(filename);
 					return ast;
 				}
 
@@ -98,11 +99,11 @@ public class Parser {
 			// Terminal
 			else if(sthead.getNodeType() == NodeType.Token) {
 				if(sthead.getData().equals(token.getTokenType().toString())) {
-					
+
 					do{
 						token = s.yylex();
 					}while (token == null);
-					
+
 					continue;
 				}
 
@@ -120,7 +121,11 @@ public class Parser {
 
 			// get production rules
 			prod = gr.getProductionRules(sthead, token);
+			
+			System.out.println("prod = " + prod); //--
+			
 			if(prod == null) {
+				System.out.println("sthead = " + sthead.getData() + " token = " + token.getTokenType());
 				System.err.println("[SP]ERROR. Get production rules failed");
 				return null;
 			}
@@ -132,64 +137,38 @@ public class Parser {
 				System.err.println("[SP]ERROR. adding children to current node failed");
 				System.exit(0); // TODO return null ?
 			}
-			
+
 			// push prod to the stack
 			for (int i = ast.getCurrent().getChildren().size()-1; i >= 0; i--){
 				st.push(ast.getCurrent().getChildren().get(i));
 			}
 		}
-		
-		// print to ast file
 	}
 
 	public void printAST(String fileName)
 	{
 		String str = "";
-		ast.getRoot().setID();
 
-		str = printAST(str, ast.getRoot());
+		str = ast.toString();
 
 		File file = new File(fileName.substring(0, fileName.lastIndexOf(".")) + ".ptree");
 		Writer writer = null;
 		try {
 			boolean bool = file.createNewFile();
-			if(!bool) {
-				System.err.println("ERROR creating output file!");
-			}
+
 			writer = new FileWriter(file);
-			
-			System.out.println("digraph G{ \n" + str + "}");
+
 			writer.write("digraph G{ \n" + str + "\n }");
-			
+
 			writer.close();
-			
+
 		} catch (IOException e) {
 			System.err.println("ERROR. Got an exception!");
 		}
-		
-		
+
+
 	}
 
-	private String printAST(String str, Node root)
-	{
-		if (root.isLeaf()){
-			for (Node n: root.getChildren())
-				System.out.println("i'm a child");
-			return str;
-		}
 
-		for (Node child : root.getChildren())
-		{
-			if (root.getID() == 0)
-				root.setID();
-			if (child.getID() == 0)
-				child.setID();
-
-			str +=  root.getData() + "_" + root.getID() + "->" + child.getData() + "_" + child.getID() + "\n";
-			str = printAST(str, child);
-		}
-
-		return str;
-	}
 
 }

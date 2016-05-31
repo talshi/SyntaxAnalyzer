@@ -9,14 +9,6 @@ public class NonTerminal extends Node {
 		this.children = new ArrayList<Node>();
 	}
 	
-	// Copy Constructor
-	public NonTerminal(Node nt) {
-		this.id = 0;
-		this.data = nt.data;
-		this.parent = nt.parent;
-		this.children = new ArrayList<Node>();
-	}
-	
 	public Node clone(){ 
 		return new NonTerminal(this.data, this.parent);
 	}

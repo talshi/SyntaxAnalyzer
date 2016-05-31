@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class Grammar {
 
-	boolean DEBUG = false;
+	boolean DEBUG = true;
 
 	private Map<String, List<Node>> prodList;
 	private NonTerminal initTerminal;
@@ -34,8 +34,7 @@ public class Grammar {
 		key += " ";
 		key += input.getTokenType().toString();
 		
-		//System.out.println("Key: " + key + " Prod: " + prodList.get(key)); //--
-		//System.out.println("input attribute = " + input.getAttribute());
+		//System.out.println("key = " + key); //--
 		
 		return prodList.get(key);
 	}
@@ -59,8 +58,8 @@ public class Grammar {
 
 			// parse terminals line
 			String tmpLine = String.valueOf(line);
-			terminals = tmpLine.split(",|="); // run from index 1
-
+			terminals = tmpLine.split("=|,"); // run from index 1
+			
 			if(DEBUG)
 				System.out.println("Line token #" + lineNumber + ": " + tmpLine);
 
@@ -72,7 +71,6 @@ public class Grammar {
 			while( (line = lnr.readLine()) != null) {
 				tmpLine = String.valueOf(line);
 				if (tmpLine.equals("")){
-					//System.out.println("is nothing"); //--
 					break;
 				}
 
@@ -124,6 +122,7 @@ public class Grammar {
 					String key = "";
 					key += nonTerminalLine.get(0) + " " + terminals[i];
 					prodList.put(key, prod);
+					System.out.println("key = " + key + " prod = " + prod);
 
 					if(DEBUG)
 						System.out.println("Key: " + key + ", Productions: " + prod.toString());

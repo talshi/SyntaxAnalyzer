@@ -10,12 +10,12 @@ public class Terminal extends Node {
 	}
 	
 	// Copy Constructor
-	public Terminal(Node t) {
-		this.id = 0;
-		this.data = t.data;
-		this.parent = t.parent;
-		this.children = new ArrayList<Node>();
-	}
+//	public Terminal(Node t) {
+//		this.id = 0;
+//		this.data = t.data;
+//		this.parent = t.parent;
+//		this.children = new ArrayList<Node>();
+//	}
 	
 	public Node clone(){
 		return new Terminal(this.data, this.parent);

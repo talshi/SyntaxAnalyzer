@@ -3,9 +3,8 @@ public class ParserMain
 {
 	public static void main(String[] args) 
 	{
-		//System.out.println("hello world");
-		
 		/*
+		// Ex1
 		Scanner s = new Scanner(args[0]);
 		TokenWrite tw = new TokenWrite(args[0]);
 		
@@ -30,19 +29,9 @@ public class ParserMain
 		tw.closeWriter(); //close writing
 		*/
 		
-		//configFile - args[0]
-		//inputFile - args[1]
-
+		// Ex2
 		Parser p = new Parser(args);
-		AST ast;
-		
-		if ((ast = p.yyLL1Parse()) != null){
-			p.printAST(args[1]);
-			//p.printAST();
-		}
-		else{
-			System.err.println("NOOOOOOO");
-		}
+		AST ast = p.yyLL1Parse();
 	}
 
 }
