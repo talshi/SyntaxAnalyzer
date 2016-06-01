@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class Grammar {
 
-	boolean DEBUG = true;
+	boolean DEBUG = false;
 
 	private Map<String, List<Node>> prodList;
 	private NonTerminal initTerminal;
@@ -33,9 +33,7 @@ public class Grammar {
 		key += sthead.getData();
 		key += " ";
 		key += input.getTokenType().toString();
-		
-		//System.out.println("key = " + key); //--
-		
+
 		return prodList.get(key);
 	}
 
@@ -59,12 +57,14 @@ public class Grammar {
 			// parse terminals line
 			String tmpLine = String.valueOf(line);
 			terminals = tmpLine.split("=|,"); // run from index 1
-			
+
 			if(DEBUG)
 				System.out.println("Line token #" + lineNumber + ": " + tmpLine);
 
-			if(DEBUG)
+			if(DEBUG){
+				System.out.print("terminals = ");
 				printStrings(terminals);
+			}
 
 			lineNumber++;
 
@@ -82,16 +82,18 @@ public class Grammar {
 					lineNumber++;
 					continue;
 				}
-				if(DEBUG)
+				if(DEBUG){
+					System.out.print("nonTerminals = ");
 					System.out.println(nonTerminalLine);
-				
+				}
+
 				currNonTerminal = nonTerminalLine.get(0);
-				
+
 				// on line 1, init the initTerminal
 				if(this.initTerminal == null && currNonTerminal.indexOf(0) != '#') {
 					this.initTerminal = new NonTerminal(currNonTerminal, null);
 				}
-				
+
 				for(int i = 1; i < nonTerminalLine.size(); i++) {
 					String[] tmpProd = nonTerminalLine.get(i).split(";");
 
@@ -122,7 +124,6 @@ public class Grammar {
 					String key = "";
 					key += nonTerminalLine.get(0) + " " + terminals[i];
 					prodList.put(key, prod);
-					System.out.println("key = " + key + " prod = " + prod);
 
 					if(DEBUG)
 						System.out.println("Key: " + key + ", Productions: " + prod.toString());
@@ -152,13 +153,15 @@ public class Grammar {
 
 	private List<String> parseNonTerminals(String line) {
 		List<String> nonTerminals = new ArrayList<String>();
-		char[] chars = line.toCharArray();
+		//char[] chars = line.toCharArray();
+
 		String str = "";
 		if(line.contains("#")) {
 			return null;
 		}
-		for(int i = 0; i < chars.length; i++) {
-			if(chars[i] == '=' || chars[i] == ',') {
+
+		for(int i = 0; i < line.length(); i++) {
+			if(line.charAt(i) == '=' || line.charAt(i) == ',') {
 				if(str.isEmpty()) {
 					str = " ";
 				}
@@ -166,9 +169,15 @@ public class Grammar {
 				str = "";
 			}
 			else {
-				str += chars[i];
+				str += line.charAt(i);
 			}
 		}
+		
+		if(str.isEmpty()) {
+			str = " ";
+		}
+		nonTerminals.add(str);
+
 		return nonTerminals;
 	}
 
