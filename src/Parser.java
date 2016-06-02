@@ -59,7 +59,6 @@ public class Parser {
 
 		// push init terminal
 		st.push(ast.getRoot());
-
 		while(true) {
 			sthead = st.pop();
 
@@ -122,7 +121,6 @@ public class Parser {
 			prod = gr.getProductionRules(sthead, token);
 
 			if(prod == null) {
-				System.out.println("sthead = " + sthead.getData() + " token = " + token.getTokenType());
 				System.err.println("[SP]ERROR. Get production rules failed");
 				return null;
 			}
@@ -148,7 +146,7 @@ public class Parser {
 
 		str = ast.toString();
 
-		File file = new File(fileName.substring(0, fileName.lastIndexOf(".")) + "ptree");
+		File file = new File(fileName.substring(0, fileName.lastIndexOf(".")) + ".ptree");
 		Writer writer = null;
 		try {
 			boolean bool = file.createNewFile();
